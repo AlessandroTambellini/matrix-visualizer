@@ -1,0 +1,67 @@
+#matrix-settings {
+    position: absolute;
+    z-index: 99; /* Otherwise, the user is not able to move the slider of the range, because
+    control is given to the movement of the camera on the canvas */
+    bottom: 1rem;
+    left: 1rem;
+    
+    padding: 2rem;
+    gap: 1.5rem;
+    
+    display: flex;
+    
+    /* glassy effect from https://css.glass/ */
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(255, 255, 255, 0.1);
+    background-color: rgb(0, 0, 0, 0.19);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+#matrix-settings * {
+    font-size: 1.25rem;
+    color: white;
+}
+
+#input-matrix {
+    display: flex;
+    flex-direction: column;
+}
+
+#input-matrix > fieldset {
+    display: flex;
+}
+
+#input-matrix .input-matrix-vector {
+    display: flex;
+    flex-direction: column;
+}
+
+#input-matrix .input-matrix-vector legend {
+    text-align: center;
+}
+#input-matrix .input-matrix-vector > input {
+    text-align: center;
+    background-color: transparent;
+}
+
+#input-matrix .input-matrix-vector input {
+    border: none;
+}
+
+#input-matrix > button {
+    font-size: 1.2rem;
+    background-color: white;
+    padding: .25rem;
+    cursor: pointer;
+    color: black;
+    border-radius: 5px;
+}
+
+#controls fieldset {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-around;
+}

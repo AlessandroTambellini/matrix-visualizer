@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="Use my 3D Matrix Visualizer as a support while studying Linear Algebra">
+		
+		<meta property="og:title" content="3D Matrix Visualizer">
+		<meta property="og:description" content="Use my 3D Matrix Visualizer as a support while studying Linear Algebra">
+		<!-- <meta property="og:image" content="TODO link to: ./assets/matrix-svgrepo-com.svg"> -->
+		
+		<meta property="twitter:title" content="3D Matrix Visualizer">
+		<meta property="twitter:description" content="Use my 3D Matrix Visualizer as a support while studying Linear Algebra">
+		<!-- <meta property="twitter:image" content="TODO link to: ./assets/matrix-svgrepo-com.svg>"> -->
+		
+		<link rel="icon" href="/matrix-svgrepo-com.svg" type="image/svg+xml">
+
+		<title>3D Matrix Visualizer</title>
+
+		<!-- href stands for Hypertext Reference -->
+		<link rel="stylesheet" href="./style/index.css">
+		<link rel="stylesheet" href="./style/matrix_settings.css">
+		
+		<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+	</head>
+	<body>
+		
+		<main>
+			<h1 class="sr-only">3D Matrix Visualizer</h1>
+
+			<canvas id="matrix-canvas"></canvas>
+			
+			<section id="matrix-settings">
+				<form id="input-matrix">
+					<fieldset>
+						<legend>Custom Matrix</legend>
+						<!-- TODO aria label stuff for accessibility -->
+						<fieldset class="input-matrix-vector">
+							<legend>v1</legend>
+							<input type="number" min="-9" max="9" placeholder="0">
+							<input type="number" min="-9" max="9" placeholder="0">
+							<input type="number" min="-9" max="9" placeholder="0">
+						</fieldset>
+						<fieldset class="input-matrix-vector">
+							<legend>v2</legend>
+							<input type="number" min="-9" max="9" placeholder="0">
+							<input type="number" min="-9" max="9" placeholder="0">
+							<input type="number" min="-9" max="9" placeholder="0">
+						</fieldset>
+						<fieldset class="input-matrix-vector">
+							<legend>v3</legend>
+							<input type="number" min="-9" max="9" placeholder="0">
+							<input type="number" min="-9" max="9" placeholder="0">
+							<input type="number" min="-9" max="9" placeholder="0">
+						</fieldset>
+					</fieldset>
+					<button>Create Matrix</button>
+				</form>
+
+				<form id="controls">
+					<fieldset>
+						<legend>Multiply by Scalar</legend>
+						<div id="v1-control" class="flex">
+							<label for="v1-slider">v1</label>
+							<input type="range" min="-9" max="9" value="1" title="33" id="v1-slider" class="v-slider">
+							<div class="v-scalar">1</div>
+						</div>
+						<div id="v2-control" class="flex">
+							<label for="v2-slider">v2</label>
+							<input type="range" min="-9" max="9" value="1" id="v2-slider" class="v-slider">		
+							<div class="v-scalar">1</div>
+						</div>
+						
+						<div id="v3-control" class="flex">
+							<label for="v3-slider">v3</label>
+							<input type="range" min="-9" max="9" value="1" id="v3-slider" class="v-slider">		
+							<div class="v-scalar">1</div>
+						</div>
+					</fieldset>
+				</form>
+			</section>
+
+			<nav id="matrices-nav">
+
+				<!-- I leave almost all the class names similar to how they are in Bootstrap for convinience:
+					card, card-title, etc. -->
+				
+				<article class="card">
+					<h3 class="card-title">Symmetric Matrix</h3>
+					<p class="card-text">
+						A Symmetric Matrix is a matrix that is mirrored across the diagonal.
+						Formally, a matrix is symmetric if it equals its transpose:
+						<i>A = A<sup>T</sup></i>
+					</p>
+					<footer>
+						<a href="https://en.wikipedia.org/wiki/Symmetric_matrix" class="card-link">
+							Symmetric Matrix
+						</a>
+						<button type="button" id="symm-mat-btn" class="card-btn">Draw</button>
+					</footer>
+				</article>
+	
+				<article class="card">
+					<h3 class="card-title">Skew-Symmetric Matrix</h3>
+					<p class="card-text">
+						A Skew-Symmetric Matrix is a matrix where the lower-triangle is the 
+						sign-flipped version of the upper-triangle. Formally:
+						<i>A = -A<sup>T</sup></i>
+					</p>
+					<footer>
+						<a href="https://en.wikipedia.org/wiki/Skew-symmetric_matrix" class="card-link">
+							Skew-Symmetric Matrix
+						</a>
+						<button type="button" id="skew-symm-mat-btn" class="card-btn">Draw</button>
+					</footer>
+				</article>
+	
+				<article class="card">
+					<h3 class="card-title">Diagonal Matrix</h3>
+					<p class="card-text">
+						A Diagonal Matrix is a matrix that has all zeros on the off-diagonals,
+						and only the diagonal elements (going from top-left to bottom-right)
+						may contain non-zero elements. Formally:
+						\[
+						a_{i,j} = \begin{cases} 
+						\alpha_n & \text{if } i = j \\ 
+						0 & \text{if } i \neq j 
+						\end{cases}
+						\]
+					</p>
+					<footer>
+						<a href="https://en.wikipedia.org/wiki/Diagonal_matrix" class="card-link">
+							Diagonal Matrix
+						</a>
+						<button type="button" id="diag-mat-btn" class="card-btn">Draw</button>
+					</footer>
+				</article>
+				
+				<article class="card">
+					<h3 class="card-title">Triangular Matrix</h3>
+					<p class="card-text">
+						A Triangular Matrix is a matrix that can come in 2 forms:
+					</p>
+					<ul>
+						<li>
+							upper-triangular: only the diagonal and the elements above it may contain 
+							non-zero elements
+						</li>
+						<li>
+							lower-triangular: only the diagonal and the elements below it may contain
+							non-zero elements
+						</li>
+					</ul>
+					<footer>
+						<a href="https://en.wikipedia.org/wiki/Triangular_matrix" class="card-link">
+							Triangular Matrix
+						</a>
+						<button type="button" id="triang-mat-btn" class="card-btn">Draw</button>
+					</footer>
+				</article>
+	
+				<article class="card">
+					<h3 class="card-title">Orthogonal Matrix</h3>
+					<p class="card-text">
+						An Orthogonal Matrix is a matrix that satisfies the following two criteria:
+						<ol>
+							<li>All of its columns are pairwise orthogonal. It means that
+								the dot product between any two columns is 0.
+							</li>
+							<li>
+								Each column is unit magnitude. Formally:
+								\( \| Q_i \| = 1 \)
+							</li>
+						</ol>
+						Formally:
+						\[
+						\langle Q_i, Q_j \rangle = \begin{cases} 
+						1, & \text{if } i = j \\
+						0, & \text{if } i \neq j 
+						\end{cases}
+						\]
+					</p>
+					<footer>
+						<a href="https://en.wikipedia.org/wiki/Orthogonal_matrix" class="card-link">
+							Orthogonal Matrix
+						</a>
+						<button type="button" id="ortho-mat-btn" class="card-btn">Draw</button>
+					</footer>
+				</article>
+	
+				<article class="card">
+					<h3 class="card-title">Toeplitz Matrix</h3>
+					<p class="card-text">
+						A Toeplitz Matrix is a matrix in which each <b>descending</b> diagonal contains the same element.
+						Formally: 
+						<i>A<sub>i,j</sub> = A<sub>i+1,j+1</sub> = a<sub>i-j</sub></i>
+					</p>
+					<footer>
+						<a href="https://en.wikipedia.org/wiki/Toeplitz_matrix" class="card-link">Toeplitz Matrix</a>
+						<button type="button" id="toeplitz-mat-btn" class="card-btn">Draw</button>
+					</footer>
+				</article>
+				
+				<article class="card">
+					<h3 class="card-title">Hankel Matrix</h3>
+					<p class="card-text">
+						A Hankel Matrix is a square matrix in which each <b>ascending</b> diagonal contains the same element
+					</p>
+					<footer>
+						<a href="https://en.wikipedia.org/wiki/Hankel_matrix" class="card-link">Hankel Matrix</a>
+						<button type="button" id="hankel-mat-btn" class="card-btn">
+							Draw
+						</button>
+					</footer>
+				</article>
+	
+				<footer>
+					<a href="https://github.com/AlessandroTambellini">
+						<img src="/github-svgrepo-com.svg" alt="GitHub Icon"
+							onerror="this.src='/github-svgrepo-com.png'" height="69">
+					</a>
+					<a href="https://buymeacoffee.com/KU9BKcReLv">
+						<img src="/buymeacoffee-svgrepo-com.svg" alt="BuyMeACoffee Icon"
+							onerror="this.src='/buymeacoffee-svgrepo-com.png'" height="69">
+					</a>
+				</footer>
+			</nav>
+		</main>
+
+		<script src="./static_content.js" type="module"></script>
+		<script src="./index.js" type="module"></script>
+	</body>
+</html>
