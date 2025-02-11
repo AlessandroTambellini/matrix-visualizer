@@ -9,6 +9,7 @@ body {
     height: 100vh;
     display: flex;
     overflow: hidden; /* No clue of why the canvas always overflows a bit */
+    background-color: black;
 }
 
 /* Screen readers */
@@ -25,15 +26,15 @@ body {
 }
 
 #matrices-nav {
-    z-index: 99;
-    position: absolute;
-    top: 0;
+    position: fixed;
     right: 1vw;
+    top: 0;
+    width: calc(30% - 1vw);
     height: 100vh;
     overflow-y: scroll;
     scrollbar-width: none; /* For Firefox */
+    
     padding: 1rem .5rem;
-
     background: rgba(255, 255, 255, 0.2);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(5px);
@@ -61,6 +62,10 @@ body {
     border-radius: 16px;
 }
 
+#matrices-nav .card:last-child {
+    margin-bottom: 0;
+}
+
 #matrices-nav .card footer {
     display: flex;
     justify-content: space-between;
@@ -80,13 +85,6 @@ body {
     color: aqua;
 }
 
-#matrices-nav footer {
-    padding: 1rem 0;
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-}
-
 .label { 
     font-size: 1.5rem; 
     color: yellow;
@@ -97,7 +95,7 @@ body {
 }
 
 .card p, .card li {
-    width: 50ch;
+    max-width: 50ch;
 }
 
 .flex {

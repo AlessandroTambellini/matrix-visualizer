@@ -6,17 +6,17 @@ import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer
 const canvas = document.querySelector('#matrix-canvas');
 
 const renderer = new THREE.WebGLRenderer({ canvas })
-renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setSize(window.innerWidth * .7, window.innerHeight);
 
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
 camera.lookAt(0, 0, 0)
-camera.position.set(4, 15, 20)
+camera.position.set(0, 5, 20)
 
 const controls = new OrbitControls(camera, renderer.domElement) 
-controls.enableDamping = true;
+controls.enableDamping = true
 
-export const scene = new THREE.Scene()
 export const origin = new THREE.Vector3()
+export const scene = new THREE.Scene()
 
 // rgb - xyz
 const x_axis = new THREE.ArrowHelper(new THREE.Vector3(1, 0, 0), new THREE.Vector3(-10, 0, 0), 20, 'red', 0.4)
@@ -73,8 +73,8 @@ for (let i = 1; i <= 9; i++) {
  */
 
 window.addEventListener('resize', () => {
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    camera.aspect = window.innerWidth / window.innerHeight;
+    renderer.setSize(window.innerWidth * .7, window.innerHeight);
+    camera.aspect = window.innerWidth * .7 / window.innerHeight;
     camera.updateProjectionMatrix();
 });
 

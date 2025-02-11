@@ -1,3 +1,11 @@
+#matrix-canvas {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 70%;
+    height: 100%;
+}
+
 #matrix-settings {
     position: absolute;
     z-index: 99; /* Otherwise, the user is not able to move the slider of the range, because
