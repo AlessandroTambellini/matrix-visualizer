@@ -8,7 +8,6 @@ body {
     margin: 0;
     height: 100vh;
     display: flex;
-    overflow: hidden; /* No clue of why the canvas always overflows a bit */
     background-color: black;
 }
 
@@ -25,29 +24,41 @@ body {
     border: 0;
 }
 
-#matrices-nav {
+.flex {
+    display: flex;
+}
+
+#matrix-canvas {
     position: fixed;
-    right: 1vw;
+    left: 0;
     top: 0;
-    width: calc(30% - 1vw);
+    width: 70%;
+    height: 100%;
+}
+
+/*
+ *
+ *  matrix nav
+ */
+
+#matrix-nav {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 30%;
     height: 100vh;
     overflow-y: scroll;
-    scrollbar-width: none; /* For Firefox */
-    
-    padding: 1rem .5rem;
+
+    padding: 1vh 1vw;
     background: rgba(255, 255, 255, 0.2);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
     border-left: 1px solid rgba(255, 255, 255, 0.3);
-    border-right: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-#matrices-nav::-webkit-scrollbar {
-    display: none;  /* For Chrome, Safari, and Opera */
-}
 
-#matrices-nav .card {
+#matrix-nav .card {
     font-size: 1.2rem;
     color: white;
 
@@ -62,17 +73,17 @@ body {
     border-radius: 16px;
 }
 
-#matrices-nav .card:last-child {
+#matrix-nav .card:last-child {
     margin-bottom: 0;
 }
 
-#matrices-nav .card footer {
+#matrix-nav .card footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-#matrices-nav .card footer button {
+#matrix-nav .card footer button {
     border-radius: 16px;
     font-size: 1.2rem;
     background-color: white;
@@ -81,28 +92,152 @@ body {
     cursor: pointer;
 }
 
-#matrices-nav .card .card-link {
+#matrix-nav .card .card-link {
     color: aqua;
-}
-
-.label { 
-    font-size: 1.5rem; 
-    color: yellow;
-}
-
-.axis-label {
-    font-size: 1rem;
 }
 
 .card p, .card li {
     max-width: 50ch;
 }
 
-.flex {
+/*
+ *
+ *  matrix settings
+ */
+
+#matrix-settings {
+    position: absolute;
+    z-index: 99; /* Otherwise, the user is not able to move the slider of the range, because
+    control is given to the movement of the camera on the canvas */
+    padding-inline: 3vw;
+    bottom: 3vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+#matrix-settings * {
+    font-size: 1.25rem;
+    color: white;
+}
+
+#custom-matrix {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+}
+
+#custom-matrix > fieldset {
     display: flex;
 }
 
-.v-scalar, fieldset label {
+#custom-matrix .custom-matrix-vector {
+    display: flex;
+    flex-direction: column;
+}
+
+#custom-matrix .custom-matrix-vector legend {
+    text-align: center;
+}
+#custom-matrix .custom-matrix-vector input {
+    text-align: center;
+    background-color: transparent;
+    border: none;
+}
+
+#custom-matrix > button {
+    font-size: 1.2rem;
+    background-color: white;
+    padding: .25rem;
+    cursor: pointer;
+    color: black;
+    border-radius: 5px;
+}
+
+#controls {
+    width: fit-content;
+}
+
+#controls fieldset {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#controls .v-scalar, fieldset label {
     width: 4rem;
     text-align: center;
 }
+
+/*
+ *
+ *  aside buttons
+ */
+
+aside {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding: 1vh 2vw;
+    display: none;
+}
+
+aside button {
+    display: none;
+    padding: 5px;
+}
+
+aside button:nth-child(1) {
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 1024px) {
+    #matrix-nav {
+        display: none;
+        width: 60vw;
+        padding-right: calc(60px + 4vw);
+    }
+
+    #matrix-settings {
+        /* width: 100vw; */
+        left: 0;
+    }
+
+    aside {
+        display: block;
+    }
+
+    aside button img {
+        width: 50px;
+    }
+
+    aside #matrix-nav-btn {
+        display: block;
+    }
+}
+
+@media (max-width: 790px) {
+    #matrix-nav {
+        width: 100vw;
+    }
+
+    #matrix-settings {
+        flex-direction: column;
+        display: none;
+    }
+
+    aside #matrix-settings-btn {
+        display: block;
+    }
+}
+
+@media (max-width: 420px) {
+    #matrix-settings {
+        top: 20%;
+        width: 100vw;
+        height: fit-content;
+    }
+}
+

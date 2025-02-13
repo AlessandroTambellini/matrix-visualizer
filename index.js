@@ -1,56 +1,63 @@
 import * as THREE from 'three'
 import { scene, origin } from './static_content';
 
-// Locally global variables
 let v1_scalar = 1, v2_scalar = 1, v3_scalar = 1;
 let parallelepiped, parallelepiped_wireframe;
-const parallelepiped_geom = new THREE.BufferGeometry()
-const parallelepiped_edges_geom = new THREE.BufferGeometry()
+
+const parallelepiped_geom = new THREE.BufferGeometry();
+const parallelepiped_edges_geom = new THREE.BufferGeometry();
 const parallelepiped_material = new THREE.MeshBasicMaterial({ 
-    color: 'lightblue', side: THREE.DoubleSide, transparent: true, opacity: .5 })
-const parallelepiped_edges_material = new THREE.LineBasicMaterial({ color: 'lightblue', linewidth: 2 })
+    color: 'lightblue', 
+    side: THREE.DoubleSide, 
+    transparent: true, 
+    opacity: .5 
+});
+const parallelepiped_edges_material = new THREE.LineBasicMaterial({ 
+    color: 'lightblue', 
+    linewidth: 2 
+});
 
-// Initial values
-let p1 = new THREE.Vector3(5, 4, 1)
-let p2 = new THREE.Vector3(-2, 3, -4)
-let p3 = new THREE.Vector3(3, -4, -6)
 
-let arrow1 = new THREE.ArrowHelper(p1.clone().normalize(), origin, p1.length(), 'yellow', 0.4, 0.2)
-let arrow2 = new THREE.ArrowHelper(p2.clone().normalize(), origin, p2.length(), 'yellow', 0.4, 0.2)
-let arrow3 = new THREE.ArrowHelper(p3.clone().normalize(), origin, p3.length(), 'yellow', 0.4, 0.2)
+// Init values
+let p1 = new THREE.Vector3(5, 4, 1);
+let p2 = new THREE.Vector3(-2, 3, -4);
+let p3 = new THREE.Vector3(3, -4, -6);
+
+let arrow1 = new THREE.ArrowHelper(p1.clone().normalize(), origin, p1.length(), 'yellow', 0.4, 0.2);
+let arrow2 = new THREE.ArrowHelper(p2.clone().normalize(), origin, p2.length(), 'yellow', 0.4, 0.2);
+let arrow3 = new THREE.ArrowHelper(p3.clone().normalize(), origin, p3.length(), 'yellow', 0.4, 0.2);
 
 document.querySelectorAll('.v-slider').forEach(slider => {
     slider.addEventListener('input', function() {
-        if (this.id === 'v1-slider') v1_scalar = this.value
-        if (this.id === 'v2-slider') v2_scalar = this.value
-        if (this.id === 'v3-slider') v3_scalar = this.value
+        if (this.id === 'v1-slider') v1_scalar = this.value;
+        if (this.id === 'v2-slider') v2_scalar = this.value;
+        if (this.id === 'v3-slider') v3_scalar = this.value;
         
-        document.querySelector(`#${this.parentElement.id} .v-scalar`).textContent = this.value
-
-        updateParallelepiped(v1_scalar, v2_scalar, v3_scalar)
+        document.querySelector(`#${this.parentElement.id} .v-scalar`).textContent = this.value;
+        updateParallelepiped(v1_scalar, v2_scalar, v3_scalar);
     })
 })
 
-document.querySelector("#input-matrix").addEventListener('submit', (e) => {
+document.querySelector("#custom-matrix").addEventListener('submit', (e) => {
     e.preventDefault()
     
     // get input values
-    const v1 = document.querySelectorAll("#input-matrix .input-matrix-vector")[0].querySelectorAll("input")
-    const v2 = document.querySelectorAll("#input-matrix .input-matrix-vector")[1].querySelectorAll("input")
-    const v3 = document.querySelectorAll("#input-matrix .input-matrix-vector")[2].querySelectorAll("input")
+    const v1 = document.querySelectorAll("#custom-matrix .custom-matrix-vector")[0].querySelectorAll("input");
+    const v2 = document.querySelectorAll("#custom-matrix .custom-matrix-vector")[1].querySelectorAll("input");
+    const v3 = document.querySelectorAll("#custom-matrix .custom-matrix-vector")[2].querySelectorAll("input");
 
-    p1 = new THREE.Vector3(v1[0].value, v1[1].value, v1[2].value)
-    p2 = new THREE.Vector3(v2[0].value, v2[1].value, v2[2].value)
-    p3 = new THREE.Vector3(v3[0].value, v3[1].value, v3[2].value)
+    p1 = new THREE.Vector3(v1[0].value, v1[1].value, v1[2].value);
+    p2 = new THREE.Vector3(v2[0].value, v2[1].value, v2[2].value);
+    p3 = new THREE.Vector3(v3[0].value, v3[1].value, v3[2].value);
 
-    updateParallelepiped(1, 1, 1)
-    resetScalars()
+    updateParallelepiped(1, 1, 1);
+    resetScalars();
 }) 
 
 document.querySelectorAll('.card-btn').forEach(btn => {
     btn.addEventListener('click', () => {
         drawMatrix(btn.id)
-    })
+    });
 })
 
 function updateArrows(v1, v2, v3) {
@@ -126,16 +133,16 @@ function updateParallelepiped(v1_scalar, v2_scalar, v3_scalar) {
 }
 
 function drawMatrix(btn_id) {
-    if (btn_id === 'symm-mat-btn') createSymmetricMatrix()
-    else if (btn_id === 'skew-symm-mat-btn') createSkewSymmetricMatrix()
-    else if (btn_id === 'diag-mat-btn') createDiagonalMatrix()
-    else if (btn_id === 'triang-mat-btn') createTriangularMatrix()
-    else if (btn_id === 'ortho-mat-btn') createOrthogonalMatrix()
-    else if (btn_id === 'toeplitz-mat-btn') createToeplitzMatrix()
-    else if (btn_id === 'hankel-mat-btn') createHankelMatrix()   
+    if (btn_id === 'symm-mat-btn') createSymmetricMatrix();
+    else if (btn_id === 'skew-symm-mat-btn') createSkewSymmetricMatrix();
+    else if (btn_id === 'diag-mat-btn') createDiagonalMatrix();
+    else if (btn_id === 'triang-mat-btn') createTriangularMatrix();
+    else if (btn_id === 'ortho-mat-btn') createOrthogonalMatrix();
+    else if (btn_id === 'toeplitz-mat-btn') createToeplitzMatrix();
+    else if (btn_id === 'hankel-mat-btn') createHankelMatrix();   
 
-    updateParallelepiped(1, 1, 1)
-    resetScalars()
+    updateParallelepiped(1, 1, 1);
+    resetScalars();
 }
 
 function createSymmetricMatrix() {
@@ -187,3 +194,31 @@ function createHankelMatrix() {
     updateParallelepiped(1, 1, 1)
 })()
 
+const matrix_nav_btn = document.querySelector('#matrix-nav-btn');
+const matrix_nav = document.querySelector('#matrix-nav');
+const matrix_settings_btn = document.querySelector('#matrix-settings-btn');
+const matrix_settings = document.querySelector('#matrix-settings');
+
+matrix_nav_btn.addEventListener('click', toggle_matrix_nav);
+function toggle_matrix_nav() {
+    if (matrix_nav.style.display) {
+        matrix_nav.style.display = null;
+        if (matrix_settings.style.display === 'none') {
+            matrix_settings.style.display = 'flex';
+        }
+    } else {
+        matrix_nav.style.display = 'block';
+        if (window.getComputedStyle(matrix_settings).display === 'flex') {
+            matrix_settings.style.display = 'none';
+        }
+    }
+}
+
+matrix_settings_btn.addEventListener('click', toggle_matrix_settings);
+function toggle_matrix_settings() {
+    if (matrix_settings.style.display) {
+        matrix_settings.style.display = null;
+    } else {
+        matrix_settings.style.display = 'flex';
+    }
+}

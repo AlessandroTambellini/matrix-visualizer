@@ -7,19 +7,18 @@
 		
 		<meta property="og:title" content="3D Matrix Visualizer">
 		<meta property="og:description" content="Use my 3D Matrix Visualizer as a support while studying Linear Algebra">
-		<meta property="og:image" content="https://alessandrotambellini.github.io/3d-matrix-visualizer/matrix-svgrepo-com.png">
+		<meta property="og:image" content="https://alessandrotambellini.github.io/3d-matrix-visualizer/matrix.png">
 		
 		<meta property="twitter:title" content="3D Matrix Visualizer">
 		<meta property="twitter:description" content="Use my 3D Matrix Visualizer as a support while studying Linear Algebra">
-		<meta property="twitter:image" content="https://alessandrotambellini.github.io/3d-matrix-visualizer/matrix-svgrepo-com.png">
+		<meta property="twitter:image" content="https://alessandrotambellini.github.io/3d-matrix-visualizer/matrix.png">
 		
-		<link rel="icon" href="/matrix-svgrepo-com.svg" type="image/svg+xml">
+		<link rel="icon" href="/matrix.svg" type="image/svg+xml">
 
 		<title>3D Matrix Visualizer</title>
 
 		<!-- href stands for Hypertext Reference -->
 		<link rel="stylesheet" href="./style/index.css">
-		<link rel="stylesheet" href="./style/matrix_settings.css">
 		
 		<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 	</head>
@@ -31,23 +30,22 @@
 			<canvas id="matrix-canvas"></canvas>
 			
 			<section id="matrix-settings">
-				<form id="input-matrix">
+				<form id="custom-matrix">
 					<fieldset>
 						<legend>Custom Matrix</legend>
-						<!-- TODO aria label stuff for accessibility -->
-						<fieldset class="input-matrix-vector">
+						<fieldset class="custom-matrix-vector">
 							<legend>v1</legend>
 							<input name="v1 x" type="number" min="-9" max="9" placeholder="0">
 							<input name="v1 y" type="number" min="-9" max="9" placeholder="0">
 							<input name="v1 z" type="number" min="-9" max="9" placeholder="0">
 						</fieldset>
-						<fieldset class="input-matrix-vector">
+						<fieldset class="custom-matrix-vector">
 							<legend>v2</legend>
 							<input name="v2 x" type="number" min="-9" max="9" placeholder="0">
 							<input name="v2 y" type="number" min="-9" max="9" placeholder="0">
 							<input name="v2 z" type="number" min="-9" max="9" placeholder="0">
 						</fieldset>
-						<fieldset class="input-matrix-vector">
+						<fieldset class="custom-matrix-vector">
 							<legend>v3</legend>
 							<input name="v3 x" type="number" min="-9" max="9" placeholder="0">
 							<input name="v3 y" type="number" min="-9" max="9" placeholder="0">
@@ -62,7 +60,7 @@
 						<legend>Multiply by Scalar</legend>
 						<div id="v1-control" class="flex">
 							<label for="v1-slider">v1</label>
-							<input type="range" min="-9" max="9" value="1" title="33" id="v1-slider" class="v-slider">
+							<input type="range" min="-9" max="9" value="1" id="v1-slider" class="v-slider">
 							<div class="v-scalar">1</div>
 						</div>
 						<div id="v2-control" class="flex">
@@ -80,11 +78,7 @@
 				</form>
 			</section>
 
-			<nav id="matrices-nav">
-
-				<!-- I leave almost all the class names similar to how they are in Bootstrap for convinience:
-					card, card-title, etc. -->
-				
+			<nav id="matrix-nav">				
 				<article class="card">
 					<h3 class="card-title">Symmetric Matrix</h3>
 					<p class="card-text">
@@ -213,15 +207,19 @@
 						</button>
 					</footer>
 				</article>
-	
-				<!-- <footer>
-					<a href="https://buymeacoffee.com/KU9BKcReLv">
-						<img src="/buymeacoffee-svgrepo-com.svg" alt="BuyMeACoffee Icon"
-							onerror="this.src='/buymeacoffee-svgrepo-com.png'" height="69">
-					</a>
-				</footer> -->
 			</nav>
 		</main>
+
+		<aside>
+			<button id="matrix-nav-btn">
+				<img src="/matrix.svg" alt="matrix icon"
+					onerror="this.src='/matrix.png'">
+			</button>
+			<button id="matrix-settings-btn">
+				<img src="/settings.svg" alt="settings icon"
+					onerror="this.src='/settings.png'">
+			</button>
+		</aside> 
 
 		<script src="./static_content.js" type="module"></script>
 		<script src="./index.js" type="module"></script>

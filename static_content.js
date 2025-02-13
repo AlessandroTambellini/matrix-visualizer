@@ -1,13 +1,11 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
 
-// DOM element
 const canvas = document.querySelector('#matrix-canvas');
 
 const renderer = new THREE.WebGLRenderer({ canvas })
-renderer.setSize(window.innerWidth * .7, window.innerHeight);
-
+renderer.setSize(window.innerWidth <= 1024 ? window.innerWidth : window.innerWidth*.7, window.innerHeight);
+  
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
 camera.lookAt(0, 0, 0)
 camera.position.set(0, 5, 20)
@@ -72,9 +70,14 @@ for (let i = 1; i <= 9; i++) {
  *  Paiting and Update 
  */
 
+
 window.addEventListener('resize', () => {
-    renderer.setSize(window.innerWidth * .7, window.innerHeight);
-    camera.aspect = window.innerWidth * .7 / window.innerHeight;
+    let width = window.innerWidth * .7;
+    if (window.innerWidth <= 1024) {
+        width = window.innerWidth;
+    }
+    renderer.setSize(width, window.innerHeight);
+    camera.aspect = width / window.innerHeight;
     camera.updateProjectionMatrix();
 });
 
