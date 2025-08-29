@@ -1,6 +1,9 @@
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-    base: "/3d-matrix-visualizer/",
     root: './src',
+    build: {
+        outDir: '../dist',  
+        emptyOutDir: true   
+    },
 });
