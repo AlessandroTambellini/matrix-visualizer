@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { scene, origin } from './static_content';
+import { scene, origin } from './index.js';
 
 let v1_scalar = 1, v2_scalar = 1, v3_scalar = 1;
 let parallelepiped, parallelepiped_wireframe;
@@ -16,7 +16,6 @@ const parallelepiped_edges_material = new THREE.LineBasicMaterial({
     color: 'lightblue', 
     linewidth: 2 
 });
-
 
 // Init values
 let p1 = new THREE.Vector3(5, 4, 1);
@@ -35,10 +34,10 @@ document.querySelectorAll('.v-slider').forEach(slider => {
         
         document.querySelector(`#${this.parentElement.id} .v-scalar`).textContent = this.value;
         updateParallelepiped(v1_scalar, v2_scalar, v3_scalar);
-    })
-})
+    });
+});
 
-document.querySelector("#custom-matrix").addEventListener('submit', (e) => {
+document.querySelector("#custom-matrix").addEventListener('submit', e => {
     e.preventDefault()
     
     // get input values
@@ -54,42 +53,44 @@ document.querySelector("#custom-matrix").addEventListener('submit', (e) => {
     resetScalars();
 }) 
 
-document.querySelectorAll('.card-btn').forEach(btn => {
+document.querySelectorAll('.card > footer > button').forEach(btn => {
     btn.addEventListener('click', () => {
         drawMatrix(btn.id)
     });
 })
 
-function updateArrows(v1, v2, v3) {
-    scene.remove(arrow1, arrow2, arrow3)
-    arrow1 = new THREE.ArrowHelper(v1.clone().normalize(), origin, v1.length(), 'yellow', 0.4, 0.2)
-    arrow2 = new THREE.ArrowHelper(v2.clone().normalize(), origin, v2.length(), 'yellow', 0.4, 0.2)
-    arrow3 = new THREE.ArrowHelper(v3.clone().normalize(), origin, v3.length(), 'yellow', 0.4, 0.2)
-    scene.add(arrow1, arrow2, arrow3)
+function updateArrows(v1, v2, v3) 
+{
+    scene.remove(arrow1, arrow2, arrow3);
+    arrow1 = new THREE.ArrowHelper(v1.clone().normalize(), origin, v1.length(), 'yellow', 0.4, 0.2);
+    arrow2 = new THREE.ArrowHelper(v2.clone().normalize(), origin, v2.length(), 'yellow', 0.4, 0.2);
+    arrow3 = new THREE.ArrowHelper(v3.clone().normalize(), origin, v3.length(), 'yellow', 0.4, 0.2);
+    scene.add(arrow1, arrow2, arrow3);
 }
 
-function resetScalars() {
-    document.querySelectorAll('.v-scalar').forEach(scalar => scalar.textContent = 1)
-    document.querySelectorAll('.v-slider').forEach(slider => slider.value = 1)
-    v1_scalar = v2_scalar = v3_scalar = 1
+function resetScalars() 
+{
+    document.querySelectorAll('.v-scalar').forEach(scalar => scalar.textContent = 1);
+    document.querySelectorAll('.v-slider').forEach(slider => slider.value = 1);
+    v1_scalar = v2_scalar = v3_scalar = 1;
 }
 
 function updateParallelepiped(v1_scalar, v2_scalar, v3_scalar) {
 
     // remove the current one before painting the next one
-    scene.remove(parallelepiped, parallelepiped_wireframe)
+    scene.remove(parallelepiped, parallelepiped_wireframe);
 
-    updateArrows(p1, p2, p3)
+    updateArrows(p1, p2, p3);
 
     // parallelepiped points
-    const P0 = origin
-    const P1 = p1.clone().multiplyScalar(v1_scalar)
-    const P2 = p2.clone().multiplyScalar(v2_scalar)
-    const P3 = p3.clone().multiplyScalar(v3_scalar)
-    const P4 = P1.clone().add(P2)
-    const P5 = P2.clone().add(P3)
-    const P6 = P1.clone().add(P3)
-    const P7 = P4.clone().add(P3)
+    const P0 = origin;
+    const P1 = p1.clone().multiplyScalar(v1_scalar);
+    const P2 = p2.clone().multiplyScalar(v2_scalar);
+    const P3 = p3.clone().multiplyScalar(v3_scalar);
+    const P4 = P1.clone().add(P2);
+    const P5 = P2.clone().add(P3);
+    const P6 = P1.clone().add(P3);
+    const P7 = P4.clone().add(P3);
 
     const parallelepiped_vertices = [ // the 6 faces
         P0, P1, P4, P2,
@@ -98,7 +99,7 @@ function updateParallelepiped(v1_scalar, v2_scalar, v3_scalar) {
         P2, P4, P7, P5,
         P1, P6, P7, P4,
         P3, P6, P7, P5
-    ].flatMap(v => v.toArray()) // Convert each vector structure to an array of coordinates
+    ].flatMap(v => v.toArray()); // Convert each vector structure to an array of coordinates
 
     // Each face is splitted into 2 triangles
     const parallelepiped_indices = [
@@ -118,18 +119,18 @@ function updateParallelepiped(v1_scalar, v2_scalar, v3_scalar) {
         P5, P7,
         P4, P7,
         P6, P7,
-    ]
+    ];
 
     // Create parallelepiped
     parallelepiped_geom.setAttribute('position', new THREE.Float32BufferAttribute(parallelepiped_vertices, 3));
     parallelepiped_geom.setIndex(parallelepiped_indices);
-    parallelepiped = new THREE.Mesh(parallelepiped_geom, parallelepiped_material)
+    parallelepiped = new THREE.Mesh(parallelepiped_geom, parallelepiped_material);
     
     // Create parallelepiped wireframe
-    parallelepiped_edges_geom.setFromPoints(parallelepiped_edges)
-    parallelepiped_wireframe = new THREE.LineSegments(parallelepiped_edges_geom, parallelepiped_edges_material)
+    parallelepiped_edges_geom.setFromPoints(parallelepiped_edges);
+    parallelepiped_wireframe = new THREE.LineSegments(parallelepiped_edges_geom, parallelepiped_edges_material);
 
-    scene.add(parallelepiped, parallelepiped_wireframe)
+    scene.add(parallelepiped, parallelepiped_wireframe);
 }
 
 function drawMatrix(btn_id) {
@@ -192,33 +193,5 @@ function createHankelMatrix() {
 (function initialPaint() {
     scene.add(arrow1, arrow2, arrow3)
     updateParallelepiped(1, 1, 1)
-})()
+})();
 
-const matrix_nav_btn = document.querySelector('#matrix-nav-btn');
-const matrix_nav = document.querySelector('#matrix-nav');
-const matrix_settings_btn = document.querySelector('#matrix-settings-btn');
-const matrix_settings = document.querySelector('#matrix-settings');
-
-matrix_nav_btn.addEventListener('click', toggle_matrix_nav);
-function toggle_matrix_nav() {
-    if (matrix_nav.style.display) {
-        matrix_nav.style.display = null;
-        if (matrix_settings.style.display === 'none') {
-            matrix_settings.style.display = 'flex';
-        }
-    } else {
-        matrix_nav.style.display = 'block';
-        if (window.getComputedStyle(matrix_settings).display === 'flex') {
-            matrix_settings.style.display = 'none';
-        }
-    }
-}
-
-matrix_settings_btn.addEventListener('click', toggle_matrix_settings);
-function toggle_matrix_settings() {
-    if (matrix_settings.style.display) {
-        matrix_settings.style.display = null;
-    } else {
-        matrix_settings.style.display = 'flex';
-    }
-}
